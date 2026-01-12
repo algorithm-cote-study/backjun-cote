@@ -1,11 +1,21 @@
 # backjun-cote
 
-- [백준 코드플러스](https://www.acmicpc.net/workbook/codeplus)
+1️⃣ 1단계: 기초 다지기 (2주)
+1. 목표
+- 기본 문법 + 자료구조 기초
+2. 학습내용
+- 배열 / 리스트
+- 문자열
+- 조건문, 반복문
+- 함수
+- 시간복잡도 개념
 
-1. 수학
-- [약수의합](https://www.acmicpc.net/problem/17425)
-- [최대공약수와 최소공배수](https://www.acmicpc.net/problem/2609)
-
-2. 브루트포스
-- [날짜계산](https://www.acmicpc.net/problem/1476)
-- [테트로미노](https://www.acmicpc.net/problem/14500)
+2️⃣ 2단계: 필수 알고리즘 유형 정복
+- 필수 알고리즘
+1. 완전탐색 / 브루트포스
+2. 그리디
+3. 정렬
+4. 이분 탐색
+5. DFS / BFS
+6. 해시 (딕셔너리, 맵)
+7. 스택 / 큐
