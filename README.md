@@ -1,4 +1,5 @@
 # backjun-cote
+[백준링크](https://www.acmicpc.net/workbook/codeplus)
 
 1️⃣ 1단계: 기초 다지기 (2주)
 1. 목표
