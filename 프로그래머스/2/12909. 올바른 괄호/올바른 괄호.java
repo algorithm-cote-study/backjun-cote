@@ -4,23 +4,34 @@ class Solution {
     boolean solution(String s) {
         boolean answer = true;
 
-        char[] input = s.toCharArray();
+        String[] input = s.split("");
         
-        Stack<Character> stack = new Stack();
-        for(Character inputString : input){
+        int count = input.length;
+        Stack<String> stack = new Stack();
+        for(String inputString : input){
             
-            if(inputString == '(' ){
+            if(inputString.equals("(")){
                 stack.push(inputString);
             }else{
-                if(stack.isEmpty() || stack.pop() == inputString){
+                if(stack.isEmpty()){
+                    return false;
+                }
+                
+                String target = stack.pop();
+                if(target.equals(inputString)){
                     return false;
                 }
                 
             }
             
+            count--;
+            
+            if(stack.size()> count){
+                return false;
+            }
+            
         }
-    
         
-        return stack.isEmpty();
+        return answer;
     }
 }
