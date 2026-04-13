@@ -1,29 +1,19 @@
-import java.util.Stack;
+import java.util.ArrayDeque;
+import java.util.Deque;
 
 class Solution {
-
     boolean solution(String s) {
-        boolean answer = true;
 
-        String[] splitString = s.split("");
-
-        Stack<String> stack = new Stack<>();
-        for(String str : splitString){
-            if(str.startsWith("(")){
-                if(stack.size() % 2 == 1){
-                    return false;
-                }
-                stack.push(str);
-            }else{
-                if(stack.isEmpty()){
-                    return false;
-                }
-                String pop = stack.pop();
-                if(!pop.equals("(")){
-                    return false;
-                }
+        Deque<String> deque = new ArrayDeque<>();
+        String[] words = s.split("");
+        for (String word : words) {
+            if ("(".equals(word)) {
+                deque.push(word);
+            } else {
+                if(deque.isEmpty()) return false;
+                deque.pop();
             }
         }
-        return answer;
+        return deque.isEmpty();
     }
 }
