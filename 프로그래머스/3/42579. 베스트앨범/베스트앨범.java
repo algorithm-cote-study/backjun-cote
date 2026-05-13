@@ -1,68 +1,69 @@
-import java.util.ArrayList;
-import java.util.Collections;
+import java.util.Map;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.Collections;
 
 class Solution {
     public int[] solution(String[] genres, int[] plays) {
-        List<Integer> answer = new ArrayList<>();
-        Map<String,Integer> map = new HashMap<>();
-        List<BestAlbum> bestAlbumList = new ArrayList<>();
+        List<String> answer = new ArrayList<>();
+        
+        List<Music> musicList = new ArrayList<>();
+        Map<String,Integer> bestMusic = new HashMap<>();
+        
         for(int i=0; i<genres.length; i++){
-            map.put( genres[i], map.getOrDefault( genres[i],0 )+plays[i]);
+            bestMusic.put(genres[i], bestMusic.getOrDefault(genres[i], 0)+plays[i]);
         }
-        for(String key : map.keySet()){
-            bestAlbumList.add( new BestAlbum(key,map.get( key )) );
+        
+        for(int i=0; i<genres.length; i++){
+            musicList.add(new Music(genres[i], plays[i], i, bestMusic.get(genres[i])));
         }
-        Collections.sort(bestAlbumList);
-
-        for(BestAlbum b : bestAlbumList){
-            List<PlaysGenre> playsGenres = new ArrayList<>();
-            for(int i=0; i<genres.length; i++){
-                if(genres[i].equals( b.genre )){
-                    playsGenres.add( new PlaysGenre( i,plays[i] ) );
-                }
+        
+        
+        Collections.sort(musicList);
+        
+        Map<String, Integer> duplCheck = new HashMap<>();
+        
+        for(Music m : musicList){
+            if(duplCheck.get(m.genre) == null || duplCheck.get(m.genre)  < 2){
+                answer.add(String.valueOf(m.number));
             }
-            Collections.sort( playsGenres );
-            for(int i=0; i<playsGenres.size(); i++){
-                if(i<=1){
-                    answer.add(playsGenres.get( i ).index);
-                }
-            }
+            duplCheck.put(m.genre, duplCheck.getOrDefault(m.genre, 0)+1);
         }
-        return answer.stream().mapToInt( Integer::valueOf ).toArray();
+        
+    
+        
+        return answer.stream().mapToInt(Integer::parseInt).toArray();
     }
-}
-
-class PlaysGenre implements Comparable<PlaysGenre>{
-    int play;
-    int index;
-
-    PlaysGenre(int index, int play){
-        this.index = index;
-        this.play = play;
+    
+    
+    public static class Music implements Comparable<Music>{
+        // 장르        
+        private String genre;
+        // 재생횟수
+        private int playCount;
+        // 고유번호
+        private int number;
+        
+        private int totalCount;
+        
+        public Music(String genre, int playCount, int number, int totalCount){
+            this.genre = genre;
+            this.playCount = playCount;
+            this.number = number;
+            this.totalCount = totalCount;
+        }
+        
+        public void update(int totalCount){
+            this.totalCount = totalCount;
+        }
+        
+        @Override
+        public int compareTo(Music o){
+           if(o.totalCount != this.totalCount){
+               return o.totalCount - this.totalCount;
+           }
+           return o.playCount != this.playCount ? o.playCount - this.playCount : this.number - o.number;
+        }
     }
-
-    @Override
-    public int compareTo(PlaysGenre o){
-        if(this.play == o.play) return this.index - o.index;
-        return o.play - this.play;
-    }
-}
-
-class BestAlbum implements Comparable<BestAlbum>{
-    String genre;
-    int count;
-
-    BestAlbum(String genre,int count){
-        this.genre = genre;
-        this.count = count;
-    }
-
-    @Override
-    public int compareTo ( BestAlbum o ) {
-        return o.count - this.count;
-    }
-
 }
